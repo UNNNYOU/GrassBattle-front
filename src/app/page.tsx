@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-white text-black">
       <h2 className="text-3xl mb-4">記事の一覧</h2>
       <form onSubmit={handleSubmit} className="mt-4 mb-4">
         <input
