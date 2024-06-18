@@ -1,9 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Loader } from '../../components/loader';
+import { Loader } from '@/components/sheard/loader';
+import { useRouter } from 'next/navigation';
 
 export default function TokenPage() {
   const [token, setToken] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -23,7 +25,7 @@ export default function TokenPage() {
     .then(data => {
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
-      window.location.href = '/mypage'; 
+      router.push('/mypage');
     })
     .catch((error) => {
       console.error('Error:', error);
