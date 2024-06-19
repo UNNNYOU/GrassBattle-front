@@ -25,17 +25,15 @@ export default function Top() {
   };
   return (
     <main>
-      <div className="fixed h-screen w-screen -z-50">
+      <div className="fixed top-0 left-0 w-full h-screen -z-50">
         <Image
           src="/top-bg.png"
           alt="トップページの背景"
-          className="object-cover"
-          quality={100}
-          sizes="100vw"
+          objectfit="cover"
           fill
         />
       </div>
-      <div className="container mx-auto pt-10 h-screen flex flex-col justify-center itemscenter">
+      <div className="container mx-auto h-screen flex flex-col justify-center itemscenter">
         <div className="w-full lg:w-8/12 mx-auto">
           <Image
             src="/logo.png"
