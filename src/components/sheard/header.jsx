@@ -18,8 +18,8 @@ export function Header() {
             </Link>
             <ul>
               <li>
-                <Link href="/mypage" className="mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400">
-                  MyPage
+                <Link href="/battle" className="mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400">
+                  Contribution Battle
                 </Link>
               </li>
             </ul>

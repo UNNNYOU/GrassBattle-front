@@ -25,7 +25,7 @@ export default function TokenPage() {
     .then(data => {
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
-      router.push('/mypage');
+      router.push('/home');
     })
     .catch((error) => {
       console.error('Error:', error);

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader } from '@/components/sheard/loader';
 
-export default function Mypage() {
+export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
   const [userStatus, setUserStatus] = useState(null);
   const [loading, setLoading] = useState(true); // ローディング状態を追加
@@ -14,7 +14,7 @@ export default function Mypage() {
   useEffect(() => {
     const access_token = localStorage.getItem('access_token');
     const refresh_token = localStorage.getItem('refresh_token');
-    const res = fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/mypage`, {
+    const res = fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/home`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${access_token}`
