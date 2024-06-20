@@ -1,7 +1,15 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export function Header() {
+  const router = useRouter()
+  const isContactPage = router.pathname === '/'
+
+  if (isContactPage) return null
+
   return (
     <header>
       <div className="h-20 bg-neutral-800 ">

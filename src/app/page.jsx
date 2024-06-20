@@ -8,10 +8,10 @@ export default function Top() {
   const router = useRouter();
 
   useEffect(() => {
-    // ログイン済みであれば、トップページにリダイレクト
+    // ログイン済みであれば、ホームにリダイレクト
     const token = localStorage.getItem('refresh_token');
     if (token) {
-      router.push('/mypage');
+      router.push('/home');
     }
   }, []);
 
