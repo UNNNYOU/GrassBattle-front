@@ -51,7 +51,7 @@ export default function Battle(){
       })
       .then(res => {
         setUsers(res);
-        console.log(res);
+        console.log(res)
         setLoading(false); // 非同期処理が終わったらローディングを終了
       })
       .catch(error => {
@@ -70,8 +70,9 @@ export default function Battle(){
         <div className="text-center text-4xl pt-10">
           <p>GRASS BATTLE MEMBERS</p>
         </div>
-        <div className="flex flex-wrap justify-center my-10">
-          <div className="relative flex mx-4 mt-4 w-72 flex-col rounded-xl bg-white text-gray-700 shadow-2xl drop-shadow-xl">
+        <div className="flex flex-wrap justify-center my-10 pb-10">
+          {users.map((user) =>(
+          <div key={user.id} className="relative flex mx-4 mt-4 w-72 flex-col rounded-xl bg-white text-gray-700 shadow-2xl drop-shadow-xl">
             <div className="relative mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
               <Image
                 src="/UserImage.png"
@@ -81,7 +82,7 @@ export default function Battle(){
               />
             </div>
             <p className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-              ユーザー名
+              {user.name}
             </p>
             <a href='#' className="relative text-center px-5 py-3 overflow-hidden font-bold text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group" >
               <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
@@ -92,6 +93,7 @@ export default function Battle(){
               <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">BATTLE START</span>
             </a>
           </div>
+          ))}
         </div>
       </div>
     </div>
