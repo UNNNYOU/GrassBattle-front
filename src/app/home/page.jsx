@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const access_token = localStorage.getItem('access_token');
     const refresh_token = localStorage.getItem('refresh_token');
-    const res = fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/home`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/home`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${access_token}`
