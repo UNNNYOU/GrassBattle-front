@@ -86,7 +86,7 @@ export default function Home() {
                 </ul>
               </div>
               <div className="mt-10 font-bold flex flex-col text-center">
-                <a href="#" className="text-2xl">本日の戦闘力<span className="text-3xl">{currentUser.week_contributions}</span>万</a>
+                <a href="#" className="text-2xl">本日の戦闘力<span className="text-3xl">{currentUser.user_status.week_contributions}</span>万</a>
                 <p className="mt-10 text-sm">多分これからステータスとかが色々入るぞ？</p>
               </div>
             </div>
