@@ -13,10 +13,10 @@ export default function Battle(){
   const [paged, setPaged] = useState(1);
   const router = useRouter();
 
-  const access_token = localStorage.getItem('access_token');
-  const refresh_token = localStorage.getItem('refresh_token');
-
   const fetchUsers = () => {
+    const access_token = localStorage.getItem('access_token');
+    const refresh_token = localStorage.getItem('refresh_token');
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/battles/?page=${paged}`, {
       method: 'GET',
       headers: {
