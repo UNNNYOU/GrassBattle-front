@@ -22,12 +22,13 @@ export function Header() {
                 width="1920"
                 height="1080"
                 className="h-20 w-auto"
+                priority
               />
             </Link>
             <ul>
               <li>
                 <Link href="/battle" className="mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400">
-                  Contribution Battle
+                  Battle
                 </Link>
               </li>
             </ul>
