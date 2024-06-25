@@ -4,14 +4,11 @@ import { Loader } from '@/components/sheard/loader';
 import { useRouter } from 'next/navigation';
 
 export default function TokenPage() {
-  const [token, setToken] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const queryString = window.location.search;
-    // URLSearchParamsオブジェクトを作成してクエリ文字列を解析
     const params = new URLSearchParams(queryString);
-    // 特定のパラメータの値を取得
     const token = params.get('token');
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/update`,{
@@ -33,7 +30,7 @@ export default function TokenPage() {
   }, []); // 空の依存配列で一度だけ実行
 
   return (
-    <div>
+    <div className="bg-white">
       <Loader />
     </div>
   );
