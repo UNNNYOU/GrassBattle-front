@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader } from '@/components/sheard/loader';
 import { Pagination } from '@/components/sheard/pagination';
-import { ResultModal } from '@/components/battle/Result';
 
 export default function Battle() {
   const [users, setUsers] = useState(null);
