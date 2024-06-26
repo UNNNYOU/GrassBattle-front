@@ -32,6 +32,7 @@ export default function Home() {
               return res.json();
             } else {
               throw new Error('トークンのリフレッシュに失敗しました');
+              router.push('/');
             }
           })
           .then(response => {
@@ -42,7 +43,6 @@ export default function Home() {
             console.error('リクエストエラー:', error);
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
-            router.push('/');
           });
       } else {
         return res.json();
@@ -56,7 +56,6 @@ export default function Home() {
       console.error('リクエストエラー:', error);
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-      router.push('/');
     });
   } // 依存配列には空の配列を入れて、初回レンダリング時のみ実行
 
