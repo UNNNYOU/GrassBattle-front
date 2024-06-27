@@ -1,12 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader } from '@/components/sheard/loader';
+import { Loader } from '@/components/shared/Loader';
+import { UserProfile } from '@/components/home/UserProfile';
+import { UserStatus } from '@/components/home/UserStatus';
+import { UserExperience } from '@/components/home/UserExperience'
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [experienceLogs, setExperienceLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
@@ -49,7 +52,9 @@ export default function Home() {
 
       if (isMounted.current) {
         const userData = await response.json();
-        setCurrentUser(userData);
+        setCurrentUser(userData.current_user);
+        setExperienceLogs(userData.experience_logs)
+        console.log(userData);
         setLoading(false);
       }
     } catch (error) {
@@ -74,33 +79,15 @@ export default function Home() {
   if (loading) {
     return <div><Loader /></div>;
   }
+
   return (
     <div className="bg-white min-h-screen">
       <div className="flex justify-center pt-20">
-        <div className="container pb-5 lg:border-b-4 border-green-500 px-4 lg:px-20 flex flex-wrap">
+        <div className="container pb-10 lg:border-b-4 border-green-500 px-4 lg:px-20 flex flex-wrap">
           <div className="flex flex-wrap justify-center lg:ml-20 w-full">
-            <div className="w-full lg:w-auto lg:mr-5 lg:ml-5 pb-2 flex flex-col items-center justify-center lg:flex-none border-b-4 lg:border-none border-green-500">
-              <Image
-                src="/coming_soon.png"
-                alt="アイコン"
-                width="200"
-                height="200"
-                priority
-              />
-              <p className="mt-4 text-2xl font-bold">{currentUser.name}</p>
-            </div>
-            <div className="flex flex-col w-full lg:w-1/2">
-              <div className="flex justify-center mt-5 font-bold text-3xl">
-                <ul className="flex items-end">
-                  <li className="mt-2">{currentUser.user_status.level}Lv</li>
-                  <li className="mt-2 text-sm ml-3 mb-1">次のレベルまで<span className="text-green-500">■</span>×{10 - currentUser.user_status.experience_points}</li>
-                </ul>
-              </div>
-              <div className="mt-10 font-bold flex flex-col text-center">
-                <a href="#" className="text-2xl">本日の戦闘力<span className="text-3xl">{currentUser.user_status.week_contributions}</span>万</a>
-                <p className="mt-10 text-sm">多分これからステータスとかが色々入るぞ？</p>
-              </div>
-            </div>
+            <UserProfile currentUser={currentUser} /> 
+            <UserStatus currentUser={currentUser} />
+            <UserExperience experienceLogs={experienceLogs}/>
           </div>
         </div>
       </div>
