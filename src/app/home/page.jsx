@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Loader } from '@/components/shared/Loader';
 import { UserProfile } from '@/components/home/UserProfile';
 import { UserStatus } from '@/components/home/UserStatus';
-import { UserExperience } from '@/components/home/UserExperience';
+import { UserExperience } from '@/components/home/UserExperience'
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);

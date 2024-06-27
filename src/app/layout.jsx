@@ -1,9 +1,9 @@
 import { Hepta_Slab, Inter } from "next/font/google";
 import "../styles/globals.css";
-import { Header } from "@/components/sheard/Header";
-import { Footer } from "@/components/sheard/Footer";
+import { Header } from "@/components/shared/Header";
+import { Footer } from "@/components/shared/Footer";
 import { Suspense } from "react";
-import { Loader } from "@/components/sheard/Loader";
+import { Loader } from "@/components/shared/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
