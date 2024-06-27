@@ -1,15 +1,14 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Loader } from '@/components/sheard/loader';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function TokenPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const token = params.get('token');
+    const token = searchParams.get('token');
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/update`,{
       method: 'POST',

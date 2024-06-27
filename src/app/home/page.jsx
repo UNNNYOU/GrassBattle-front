@@ -1,72 +1,79 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader } from '@/components/sheard/loader';
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true); // ローディング状態を追加
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const isMounted = useRef(true);
 
-  const fetchCurrentUser = () => {
-    const access_token = localStorage.getItem('access_token');
-    const refresh_token = localStorage.getItem('refresh_token');
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/home`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-    .then(res => {
-      if (res.status === 500) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/update`, {
+  const fetchCurrentUser = async () => {
+    try {
+      const access_token = localStorage.getItem('access_token');
+      const refresh_token = localStorage.getItem('refresh_token');
+
+      let response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/home`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
+      });
+
+      if (response.status === 500) {
+        response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/update`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${refresh_token}`,
           },
-        })
-          .then(res => {
-            if (res.status === 200) {
-              return res.json();
-            } else {
-              throw new Error('トークンのリフレッシュに失敗しました');
-              router.push('/');
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+          localStorage.setItem('access_token', data.access_token);
+          localStorage.setItem('refresh_token', data.refresh_token);
+          response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/home`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${data.access_token}`
             }
-          })
-          .then(response => {
-            localStorage.setItem('access_token', response.access_token);
-            localStorage.setItem('refresh_token', response.refresh_token);
-          })
-          .catch(error => {
-            console.error('リクエストエラー:', error);
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
           });
-      } else {
-        return res.json();
+        } else {
+          router.push('/');
+          throw new Error('トークンのリフレッシュに失敗しました');
+        }
       }
-    })
-    .then(res => {
-      setCurrentUser(res);
-      setLoading(false); // 非同期処理が終わったらローディングを終了
-    })
-    .catch(error => {
-      console.error('リクエストエラー:', error);
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-    });
-  } // 依存配列には空の配列を入れて、初回レンダリング時のみ実行
+
+      if (isMounted.current) {
+        const userData = await response.json();
+        setCurrentUser(userData);
+        setLoading(false);
+      }
+    } catch (error) {
+      if (isMounted.current) {
+        router.push('/');
+        console.error('リクエストエラー:', error);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+      }
+    }
+  };
 
   useEffect(() => {
+    isMounted.current = true;
     fetchCurrentUser();
+
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   if (loading) {
-    return <div><Loader /></div>; // ローディング中の表示
+    return <div><Loader /></div>;
   }
-
   return (
     <div className="bg-white min-h-screen">
       <div className="flex justify-center pt-20">

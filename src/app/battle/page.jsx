@@ -1,90 +1,109 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, useRef } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/sheard/loader';
 import { Pagination } from '@/components/sheard/pagination';
 
-export default function Battle() {
+export default function Home() {
   const [users, setUsers] = useState(null);
   const [pagination, setPagination] = useState(null);
-  const [current_user, setCurrentUser] = useState(null);
-  const [battle_user, setBattleUser] = useState(null)
-  const [loading, setLoading] = useState(true); // ローディング状態を追加
+  const [currentUser, setCurrentUser] = useState(null);
+  const [battleUser, setBattleUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [paged, setPaged] = useState(1);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const isMounted = useRef(true);
 
-  const [isModalOpen, setIsModalOpen] = useState();
+  const fetchUsers = async () => {
+    try {
+      const access_token = localStorage.getItem('access_token');
+      const refresh_token = localStorage.getItem('refresh_token');
 
-  const fetchUsers = () => {
-    const access_token = localStorage.getItem('access_token');
-    const refresh_token = localStorage.getItem('refresh_token');
+      let response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/battles/?page=${paged}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
+      });
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/battles/?page=${paged}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${access_token}`
-      }
-    })
-      .then(res => {
-        if (res.status === 500) {
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/update`, {
+      if (response.status === 500) {
+        response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/update`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${refresh_token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+          localStorage.setItem('access_token', data.access_token);
+          localStorage.setItem('refresh_token', data.refresh_token);
+          response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/battles/?page=${paged}`, {
             method: 'GET',
             headers: {
-              'Authorization': `Bearer ${refresh_token}`,
-            },
-          })
-            .then(res => {
-              if (res.status === 200) {
-                return res.json();
-              } else {
-                throw new Error('トークンのリフレッシュに失敗しました');
-              }
-            })
-            .then(response => {
-              localStorage.setItem('access_token', response.access_token);
-              localStorage.setItem('refresh_token', response.refresh_token);
-              return response.access_token;
-            })
-            .catch(error => {
-              console.error('リクエストエラー:', error);
-              localStorage.removeItem('access_token');
-              localStorage.removeItem('refresh_token');
-            });
+              'Authorization': `Bearer ${data.access_token}`
+            }
+          });
         } else {
-          return res.json();
+          router.push('/');
+          throw new Error('トークンのリフレッシュに失敗しました');
         }
-      })
-      .then(res => {
+      }
+
+      if (isMounted.current) {
+        const res = await response.json();
         setUsers(res.users);
         setPagination(res.pagination);
         setCurrentUser(res.current_user);
-        console.log(res);
-        setLoading(false); // 非同期処理が終わったらローディングを終了
-      })
-      .catch(error => {
-        console.error('リクエストエラー:', error);
+        setLoading(false);
+      }
+    } catch (error) {
+      if (isMounted.current) {
         router.push('/');
-      });
-  }
+        console.error('リクエストエラー:', error);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+      }
+    }
+  };
 
   useEffect(() => {
+    isMounted.current = true;
     fetchUsers();
+
+    return () => {
+      isMounted.current = false;
+    };
   }, [paged]);
 
-  if (loading) {
-    return <div className="bg-white"><Loader /></div>; // ローディング中の表示
-  }
+  useEffect(() => {
+    // URLのqueryパラメータからpagedの値を取得してセットする
+    const page = parseInt(searchParams.get('page'), 10) || 1;
+    setPaged(page);
+  }, [searchParams.get('page')]);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  if (loading) {
+    return (
+      <div className="bg-white">
+        <Loader />
+      </div>
+    );
+  }
+
+
   const BattleResult = () => {
-    if(current_user.user_status.week_contributions > battle_user.user_status.week_contributions){
+    if (currentUser.user_status.week_contributions > battleUser.user_status.week_contributions) {
       return 'YOUR WIN';
-    } else if(current_user.user_status.week_contributions < battle_user.user_status.week_contributions){
+    } else if (currentUser.user_status.week_contributions < battleUser.user_status.week_contributions) {
       return 'YOUR LOSE';
     } else {
       return 'Draw';
@@ -149,11 +168,11 @@ export default function Battle() {
                       />
                     </div>
                     <p className="text-center mt-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      {current_user.name}
+                      {currentUser.name}
                     </p>
                     <div className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      <p>Lv.{current_user.user_status.level}</p>
-                      <p className="ml-3 mt-1">戦闘力 {current_user.user_status.week_contributions === 0 ? 0 : `${current_user.user_status.week_contributions}万`}</p>
+                      <p>Lv.{currentUser.user_status.level}</p>
+                      <p className="ml-3 mt-1">戦闘力 {currentUser.user_status.week_contributions === 0 ? 0 : `${currentUser.user_status.week_contributions}万`}</p>
                     </div>
                   </div>
                   {/* Battle User */}
@@ -169,11 +188,11 @@ export default function Battle() {
                       />
                     </div>
                     <p className="text-center mt-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      {battle_user.name}
+                      {battleUser.name}
                     </p>
                     <div className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      <p>Lv.{battle_user.user_status.level}</p>
-                      <p className="ml-3 mt-1">戦闘力 {battle_user.user_status.week_contributions === 0 ? 0 : `${battle_user.user_status.week_contributions}万`}</p>
+                      <p>Lv.{battleUser.user_status.level}</p>
+                      <p className="ml-3 mt-1">戦闘力 {battleUser.user_status.week_contributions === 0 ? 0 : `${battleUser.user_status.week_contributions}万`}</p>
                     </div>
                   </div>
                 </div>
