@@ -111,7 +111,6 @@ export default function Home() {
   };
 
   return (
-    <Suspense fallback={<div className="bg-white"><Loader /></div>}>
       <div className="bg-white">
         <div className="container m-auto min-h-screen">
           <div className="text-center text-4xl pt-10">
@@ -204,6 +203,5 @@ export default function Home() {
           <Pagination pagination={pagination} setPaged={setPaged} />
         </div>
       </div>
-    </Suspense>
   )
 }

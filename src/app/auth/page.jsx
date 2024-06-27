@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { Loader } from '@/components/sheard/loader';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -26,11 +26,13 @@ export default function TokenPage() {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, []); // 空の依存配列で一度だけ実行
+  }, [searchParams, router]); // searchParams と router を依存配列に追加
 
   return (
-    <div className="bg-white">
-      <Loader />
-    </div>
+    <Suspense fallback={<Loader />}>
+      <div className="bg-white">
+        <Loader />
+      </div>
+    </Suspense>
   );
 }
