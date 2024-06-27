@@ -2,6 +2,8 @@ import { Hepta_Slab, Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Header } from "@/components/sheard/header";
 import { Footer } from "@/components/sheard/footer";
+import { Suspense } from "react";
+import { Loader } from "@/components/sheard/loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +16,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ja">
       <body className="bg-white text-neutral-800">
-        <Header/>
-        {children}
-        <Footer/>
+        <Suspense fallback={<Loader/>}>
+          <Header/>
+          {children}
+          <Footer/>
+        </Suspense>
       </body>
     </html>
   );

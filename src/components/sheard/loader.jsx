@@ -7,7 +7,7 @@ import styles from '../../styles/loader.module.css'
 
 export function Loader() {
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center bg-white">
       <div className={styles.loader}>
         <div className={`${styles.cell} ${styles['d-0']}`}></div>
         <div className={`${styles.cell} ${styles['d-1']}`}></div>
