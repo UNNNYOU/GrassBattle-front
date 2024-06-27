@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/shared/Loader';
-import { Pagination } from '@/components/shared/pagination';
+import { Pagination } from '@/components/shared/Pagination';
 
 export default function Home() {
   const [users, setUsers] = useState(null);
