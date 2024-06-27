@@ -69,7 +69,7 @@ export default function Home() {
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [fetchCurrentUser]);
 
   if (loading) {
     return <div><Loader /></div>;
