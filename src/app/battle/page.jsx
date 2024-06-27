@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Loader } from '@/components/sheard/loader';
+import { Loader } from '@/components/sheard/Loader';
 import { Pagination } from '@/components/sheard/pagination';
 
 export default function Home() {

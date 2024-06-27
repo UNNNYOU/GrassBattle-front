@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import { Loader } from '@/components/sheard/loader';
+import { Loader } from '@/components/sheard/Loader';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function TokenPage() {
