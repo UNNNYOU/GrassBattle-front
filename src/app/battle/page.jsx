@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/sheard/loader';
 import { Pagination } from '@/components/sheard/pagination';
@@ -93,9 +93,11 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="bg-white">
-        <Loader />
-      </div>
+      <Suspense>
+        <div className="bg-white">
+          <Loader />
+        </div>
+      </Suspense>
     );
   }
 
