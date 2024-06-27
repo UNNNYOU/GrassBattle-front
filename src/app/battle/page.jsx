@@ -16,7 +16,7 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const isMounted = useRef(true);
 
   const fetchUsers = async () => {
@@ -79,7 +79,7 @@ export default function Home() {
     return () => {
       isMounted.current = false;
     };
-  }, [fetchUsers, searchParams, paged]);
+  }, [paged]);
 
   useEffect(() => {
     // URLのqueryパラメータからpagedの値を取得してセットする
