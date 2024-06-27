@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader } from '@/components/sheard/Loader';
+import { Loader } from '@/components/shared/Loader';
 import { UserProfile } from '@/components/home/UserProfile';
 import { UserStatus } from '@/components/home/UserStatus';
 import { UserExperience } from '@/components/home/UserExperience';

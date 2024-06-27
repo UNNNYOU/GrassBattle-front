@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Loader } from '@/components/sheard/Loader';
-import { Pagination } from '@/components/sheard/pagination';
+import { Loader } from '@/components/shared/Loader';
+import { Pagination } from '@/components/shared/pagination';
 
 export default function Home() {
   const [users, setUsers] = useState(null);
