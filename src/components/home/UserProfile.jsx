@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function UserProfile(props) {
   return (
-    <div className="w-full lg:w-auto lg:mr-5 lg:ml-5 pb-2 flex flex-col items-center justify-center lg:flex-none border-b-4 lg:border-none border-green-500">
+    <div className="w-full lg:w-auto lg:mr-5 pb-2 flex flex-col items-center justify-center lg:flex-none border-b-4 lg:border-none border-green-500">
       <Image
         src="/coming_soon.png"
         alt="アイコン"

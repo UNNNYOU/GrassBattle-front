@@ -53,7 +53,7 @@ export default function Home() {
       if (isMounted.current) {
         const userData = await response.json();
         setCurrentUser(userData.current_user);
-        setExperienceLogs(userData.experience_logs)
+        setExperienceLogs(userData.experience_histories)
         console.log(userData);
         setLoading(false);
       }
