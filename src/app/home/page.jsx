@@ -9,7 +9,8 @@ import { UserExperience } from '@/components/home/UserExperience'
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [experienceLogs, setExperienceLogs] = useState([]);
+  const [experienceHistories, setExperienceHistories] = useState([]);
+  const [weekContributionsHistories, setWeekContributionsHistories] = useState([])
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
@@ -53,7 +54,8 @@ export default function Home() {
       if (isMounted.current) {
         const userData = await response.json();
         setCurrentUser(userData.current_user);
-        setExperienceLogs(userData.experience_histories)
+        setExperienceHistories(userData.experience_histories)
+        setWeekContributionsHistories(userData.week_contribution_histries)
         console.log(userData);
         setLoading(false);
       }
@@ -87,7 +89,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center lg:ml-20 w-full">
             <UserProfile currentUser={currentUser} /> 
             <UserStatus currentUser={currentUser} />
-            <UserExperience experienceLogs={experienceLogs}/>
+            <UserExperience experienceHistories={experienceHistories}/>
           </div>
         </div>
       </div>

@@ -7,8 +7,8 @@ export function UserExperience(props) {
   return (
     <div className="w-full h-60 lg:w-[350px] lg:ml-5 flex flex-col items-center pt-5 text-gray-700 font-bold text-lg">
       <h1 className="mb-4">経験値取得履歴</h1>
-      <div className="overflow-y-scroll w-3/4 px-2 ml-1 pl-16 border-4 border-gray-400 rounded-md">
-        {props.experienceLogs.map((exp) => {
+      <div className="overflow-y-scroll h-full w-3/4 px-2 ml-1 text-center border-4 border-gray-400 rounded-md">
+        {props.experienceHistories.map((exp) => {
           return (
             <div key={exp.id}>
               <h1 className="mt-1">
