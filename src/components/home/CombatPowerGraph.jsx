@@ -3,18 +3,18 @@ import { Line } from "react-chartjs-2";
 import 'chart.js/auto';
 
 export function CombatPowerGraph(props) {
-  const date = props.weekContributions.map((week_contribution)=>{
+  const date = props.weekContributionHistories.map((week_contribution)=>{
     const formattedDate = new Date(week_contribution.created_at);
     return formattedDate.toLocaleDateString('ja-JP', { year: undefined, month: 'long', day: 'numeric' });
   })
-  const Contributions = props.weekContributions.map((week_contribution)=> week_contribution.week_contributions)
+  const contributions = props.weekContributionHistories.map((week_contribution)=> week_contribution.week_contributions)
 
   const graphData = {
     labels: date,
     datasets: [
       {
         label: "戦闘力",
-        data: Contributions,
+        data: contributions,
         borderColor: "rgba(34, 197, 94, 0.7)",
         backgroundColor: "rgba(34, 197, 94, 1)",
         yAxisID: "y"
