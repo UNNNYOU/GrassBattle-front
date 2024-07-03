@@ -55,8 +55,10 @@ export default function Home() {
       if (isMounted.current) {
         const userData = await response.json();
         setCurrentUser(userData.current_user);
+
+
         setExperienceHistories(userData.experience_histories)
-        setWeekContributions(userData.week_contribution_histories);
+        setWeekContributionsHistories(userData.week_contribution_histries)
         console.log(userData);
         setLoading(false);
       }
