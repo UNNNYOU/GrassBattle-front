@@ -6,10 +6,12 @@ import { Loader } from '@/components/shared/Loader';
 import { UserProfile } from '@/components/home/UserProfile';
 import { UserStatus } from '@/components/home/UserStatus';
 import { UserExperience } from '@/components/home/UserExperience'
+import { CombatPowerGraph } from '@/components/home/CombatPowerGraph';
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
   const [experienceLogs, setExperienceLogs] = useState([]);
+  const [weekContributions, setWeekContributions] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
@@ -54,6 +56,7 @@ export default function Home() {
         const userData = await response.json();
         setCurrentUser(userData.current_user);
         setExperienceLogs(userData.experience_histories)
+        setWeekContributions(userData.week_contribution_histories);
         console.log(userData);
         setLoading(false);
       }
@@ -82,13 +85,16 @@ export default function Home() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="flex justify-center pt-20">
-        <div className="container pb-10 lg:border-b-4 border-green-500 px-4 lg:px-20 flex flex-wrap">
-          <div className="flex flex-wrap justify-center lg:ml-20 w-full">
+      <div className="flex flex-col justify-center items-center pt-20 pb-20">
+        <div className="mb-6 lg:mb-10 pb-2 container lg:border-b-4 border-green-500 px-4 lg:px-20 flex flex-wrap">
+          <div className="flex flex-wrap justify-center xl:ml-20 w-full">
             <UserProfile currentUser={currentUser} /> 
             <UserStatus currentUser={currentUser} />
-            <UserExperience experienceLogs={experienceLogs}/>
           </div>
+        </div>
+        <div className="flex flex-wrap justify-center">
+          <CombatPowerGraph weekContributions={weekContributions}/>
+          <UserExperience experienceLogs={experienceLogs}/>
         </div>
       </div>
     </div>

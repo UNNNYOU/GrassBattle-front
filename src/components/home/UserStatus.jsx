@@ -1,6 +1,6 @@
 export function UserStatus(props) {
   return (
-    <div className="flex flex-col w-full lg:w-1/4 lg:pl-6">
+    <div className="flex flex-col w-full lg:w-2/4 lg:pl-6">
       <div className="flex justify-center mt-5 font-bold text-3xl">
         <ul className="flex items-end">
           <li className="mt-2">{props.currentUser.user_status.level}Lv</li>

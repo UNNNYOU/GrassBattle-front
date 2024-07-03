@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/shared/Loader';
 import { Pagination } from '@/components/shared/Pagination';
+import Link from 'next/link';
 
 export default function Home() {
   const [users, setUsers] = useState(null);
@@ -152,12 +153,12 @@ export default function Home() {
         <div>
           {isModalOpen && (
             <div onClick={toggleModal} className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}>
-              <div className="w-11/12 h-auto p-20 bg-white">
-                <p className="text-center text-bold text-6xl">{BattleResult()}</p>
+              <div className="w-11/12 h-auto px-2 py-10 lg:p-20 bg-white">
+                <p className="text-center text-bold text-4xl lg:text-6xl">{BattleResult()}</p>
                 <div className="flex flex-wrap justify-around items-center">
                   {/* Current User */}
                   <div className="relative flex mr-4 mt-4 w-60 md:w-80 2xl:w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                    <div className="mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
+                    <div className="hidden lg:block mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
                       <Image
                         src="/UserImage.png"
                         alt="ユーザー画像"
@@ -177,7 +178,7 @@ export default function Home() {
                   </div>
                   {/* Battle User */}
                   <div className="relative flex mr-4 mt-4 w-60 md:w-80 2xl:w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                    <div className="mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
+                    <div className="hidden lg:block mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
                       <Image
                         src="/UserImage.png"
                         alt="ユーザー画像"
