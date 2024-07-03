@@ -10,8 +10,8 @@ import { CombatPowerGraph } from '@/components/home/CombatPowerGraph';
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [experienceLogs, setExperienceLogs] = useState([]);
-  const [weekContributions, setWeekContributions] = useState([]);
+  const [experienceHistories, setExperienceHistories] = useState([]);
+  const [weekContributionsHistories, setWeekContributionsHistories] = useState([])
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
@@ -55,8 +55,9 @@ export default function Home() {
       if (isMounted.current) {
         const userData = await response.json();
         setCurrentUser(userData.current_user);
-        setExperienceLogs(userData.experience_histories)
-        setWeekContributions(userData.week_contribution_histories);
+
+        setExperienceHistories(userData.experience_histories)
+        setWeekContributionsHistories(userData.week_contribution_histries)
         console.log(userData);
         setLoading(false);
       }
@@ -94,7 +95,7 @@ export default function Home() {
         </div>
         <div className="flex flex-wrap justify-center">
           <CombatPowerGraph weekContributions={weekContributions}/>
-          <UserExperience experienceLogs={experienceLogs}/>
+          <UserExperience experienceHistories={experienceHistories}/>
         </div>
       </div>
     </div>
