@@ -15,6 +15,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchCurrentUser = async () => {
     try {
@@ -79,16 +80,27 @@ export default function Home() {
     };
   }, []);
 
-  if (loading) {
-    return <div><Loader /></div>;
-  }
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  if (loading) return <Loader />;
 
   return (
     <div className="bg-white min-h-screen">
       <div className="flex flex-col justify-center items-center pt-20 pb-20">
         <div className="mb-6 lg:mb-10 pb-2 container lg:border-b-4 border-green-500 px-4 lg:px-20 flex flex-wrap">
           <div className="flex flex-wrap justify-center xl:ml-20 w-full">
-            <UserProfile user={currentUser} /> 
+            <div className="w-full lg:w-auto lg:mr-5 pb-2 flex flex-col items-center justify-center lg:flex-none border-b-4 lg:border-none border-green-500">
+              <Image
+                src="/coming_soon.png"
+                alt="アイコン"
+                width="200"
+                height="200"
+                priority
+              />
+              <p className="mt-4 text-2xl font-bold">{props.user.name}<span></span></p>
+            </div>
             <UserStatus user={currentUser} />
           </div>
         </div>
@@ -96,6 +108,11 @@ export default function Home() {
           <CombatPowerGraph weekContributionHistories={weekContributionHistories}/>
           <UserExperience experienceHistories={experienceHistories}/>
         </div>
+      </div>
+      <div>
+        {isModalOpen && (
+          <RenameModal/>
+        )}
       </div>
     </div>
   )
