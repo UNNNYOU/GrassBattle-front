@@ -10,7 +10,7 @@ export function UserProfile(props) {
         height="200"
         priority
       />
-      <p className="mt-4 text-2xl font-bold">{props.currentUser.name}</p>
+      <p className="mt-4 text-2xl font-bold">{props.user.name}</p>
     </div>
   );
 }
