@@ -35,6 +35,7 @@ export function CombatPowerGraph(props) {
       y: {
         stacked: false,
         position: "left",
+        min: 0,
       }
     }
   };

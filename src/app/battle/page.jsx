@@ -17,7 +17,7 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const isMounted = useRef(true);
 
   const fetchUsers = async () => {
@@ -197,6 +197,9 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+                <Link href={`/users/${battleUser.id}`} className="text-white flex justify-center text-center w-4/6 xl:w-[30rem] mt-16 m-auto transform rounded-sm bg-green-600 py-4 font-bold duration-300 hover:bg-green-400">
+                  相手のプロフィールを見る
+                </Link>
               </div>
             </div>
           )}
