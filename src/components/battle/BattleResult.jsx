@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { RxCross2 } from "rocketicons/rx";
 
 export function BattleResult(props) {
   const BattleResult = () => {
@@ -12,8 +13,11 @@ export function BattleResult(props) {
     }
   };
   return (
-    <div onClick={props.toggleModal} className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}>
-      <div className="w-11/12 h-auto px-2 py-10 lg:p-20 bg-white">
+    <div className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}>
+      <div className="relative w-11/12 h-auto px-2 py-10 lg:p-20 bg-white">
+        <div className="absolute top-2 right-2" onClick={props.toggleModal}>
+          <RxCross2 className="icon-2xl icon-gray-700" />
+        </div>
         <p className="text-center text-bold text-4xl lg:text-6xl">{BattleResult()}</p>
         <div className="flex flex-wrap justify-around items-center">
           {/* Current User */}

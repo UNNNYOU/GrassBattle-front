@@ -58,7 +58,6 @@ export default function UserShow() {
         setUser(userData.user);
         setExperienceHistories(userData.experience_histories)
         setWeekContributionHistories(userData.week_contribution_histories)
-        console.log(userData);
         setLoading(false);
       }
     } catch (error) {

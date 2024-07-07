@@ -3,19 +3,22 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader } from '@/components/shared/Loader';
-import { UserProfile } from '@/components/home/UserProfile';
 import { UserStatus } from '@/components/home/UserStatus';
 import { UserExperience } from '@/components/home/UserExperience'
 import { CombatPowerGraph } from '@/components/home/CombatPowerGraph';
+import { BiEdit } from "rocketicons/bi";
+import Image from 'next/image';
+import { RenameModal } from '@/components/home/RenameModal';
 
 export default function Home() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userName, setUserName] = useState('');
   const [experienceHistories, setExperienceHistories] = useState([]);
   const [weekContributionHistories, setWeekContributionHistories] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [renameModalOpen, setRenameModalOpen] = useState(false);
 
   const fetchCurrentUser = async () => {
     try {
@@ -56,9 +59,9 @@ export default function Home() {
       if (isMounted.current) {
         const userData = await response.json();
         setCurrentUser(userData.current_user);
-        setExperienceHistories(userData.experience_histories)
-        setWeekContributionHistories(userData.week_contribution_histories)
-        console.log(userData);
+        setExperienceHistories(userData.experience_histories);
+        setWeekContributionHistories(userData.week_contribution_histories);
+        setUserName(userData.current_user.name);
         setLoading(false);
       }
     } catch (error) {
@@ -80,8 +83,8 @@ export default function Home() {
     };
   }, []);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleRenameModal = () => {
+    setRenameModalOpen(!renameModalOpen);
   };
 
   if (loading) return <Loader />;
@@ -99,7 +102,9 @@ export default function Home() {
                 height="200"
                 priority
               />
-              <p className="mt-4 text-2xl font-bold">{props.user.name}<span></span></p>
+              <p className="mt-4 text-2xl font-bold">{userName}
+                <span onClick={() => {toggleRenameModal();}}><BiEdit className="mb-1 icon-xl icon-gray-700"/></span>
+              </p>
             </div>
             <UserStatus user={currentUser} />
           </div>
@@ -110,8 +115,8 @@ export default function Home() {
         </div>
       </div>
       <div>
-        {isModalOpen && (
-          <RenameModal/>
+        {renameModalOpen && (
+          <RenameModal toggleRenameModal={toggleRenameModal} currentUser={currentUser} userName={userName} setUserName={setUserName}/>
         )}
       </div>
     </div>
