@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/shared/Loader';
 import { Pagination } from '@/components/shared/Pagination';
-import Link from 'next/link';
+import { BattleResult } from '@/components/battle/BattleResult'
 
 export default function Home() {
   const [users, setUsers] = useState(null);
@@ -14,11 +14,10 @@ export default function Home() {
   const [battleUser, setBattleUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [paged, setPaged] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const isMounted = useRef(true);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const isMounted = useRef(true);
 
   const fetchUsers = async () => {
     try {
@@ -92,24 +91,7 @@ export default function Home() {
     setIsModalOpen(!isModalOpen);
   };
 
-  if (loading) {
-    return (
-      <div className="bg-white">
-        <Loader />
-      </div>
-    );
-  }
-
-
-  const BattleResult = () => {
-    if (currentUser.user_status.week_contributions > battleUser.user_status.week_contributions) {
-      return 'YOUR WIN';
-    } else if (currentUser.user_status.week_contributions < battleUser.user_status.week_contributions) {
-      return 'YOUR LOSE';
-    } else {
-      return 'Draw';
-    }
-  };
+  if(loading) return <Loader />
 
   return (
     <div className="bg-white">
@@ -152,56 +134,7 @@ export default function Home() {
         </div>
         <div>
           {isModalOpen && (
-            <div onClick={toggleModal} className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}>
-              <div className="w-11/12 h-auto px-2 py-10 lg:p-20 bg-white">
-                <p className="text-center text-bold text-4xl lg:text-6xl">{BattleResult()}</p>
-                <div className="flex flex-wrap justify-around items-center">
-                  {/* Current User */}
-                  <div className="relative flex mr-4 mt-4 w-60 md:w-80 2xl:w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                    <div className="hidden lg:block mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
-                      <Image
-                        src="/UserImage.png"
-                        alt="ユーザー画像"
-                        objectFit="cover"
-                        width="1920"
-                        height="1080"
-                        priority
-                      />
-                    </div>
-                    <p className="text-center mt-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      {currentUser.name}
-                    </p>
-                    <div className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      <p>Lv.{currentUser.user_status.level}</p>
-                      <p className="ml-3 mt-1">戦闘力 {currentUser.user_status.week_contributions === 0 ? 0 : `${currentUser.user_status.week_contributions}万`}</p>
-                    </div>
-                  </div>
-                  {/* Battle User */}
-                  <div className="relative flex mr-4 mt-4 w-60 md:w-80 2xl:w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                    <div className="hidden lg:block mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
-                      <Image
-                        src="/UserImage.png"
-                        alt="ユーザー画像"
-                        objectFit="cover"
-                        width="1920"
-                        height="1080"
-                        priority
-                      />
-                    </div>
-                    <p className="text-center mt-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      {battleUser.name}
-                    </p>
-                    <div className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                      <p>Lv.{battleUser.user_status.level}</p>
-                      <p className="ml-3 mt-1">戦闘力 {battleUser.user_status.week_contributions === 0 ? 0 : `${battleUser.user_status.week_contributions}万`}</p>
-                    </div>
-                  </div>
-                </div>
-                <Link href={`/users/${battleUser.id}`} className="text-white flex justify-center text-center w-4/6 xl:w-[30rem] mt-16 m-auto transform rounded-sm bg-green-600 py-4 font-bold duration-300 hover:bg-green-400">
-                  相手のプロフィールを見る
-                </Link>
-              </div>
-            </div>
+            <BattleResult currentUser={currentUser} toggleModal={toggleModal} battleUser={battleUser} />
           )}
         </div>
         <Pagination pagination={pagination} setPaged={setPaged} />

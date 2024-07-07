@@ -28,9 +28,5 @@ export default function TokenPage() {
       });
   }, [searchParams, router]); // searchParams と router を依存配列に追加
 
-  return (
-    <div className="bg-white">
-      <Loader />
-    </div>
-  );
+  return <Loader />
 }
