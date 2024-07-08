@@ -106,10 +106,10 @@ export default function Home() {
                 <Image
                   src="/UserImage.png"
                   alt="ユーザー画像"
-                  objectfit="cover"
                   width="1920"
                   height="1080"
                   priority
+                  style={{ objectFit: 'contain' }}
                 />
               </div>
               <p className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

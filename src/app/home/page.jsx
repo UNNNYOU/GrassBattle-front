@@ -101,9 +101,10 @@ export default function Home() {
                 width="200"
                 height="200"
                 priority
+                style={{ objectFit: 'contain' }} 
               />
-              <p className="mt-4 text-2xl font-bold">{userName}
-                <span onClick={() => {toggleRenameModal();}}><BiEdit className="mb-1 icon-xl icon-gray-700"/></span>
+              <p className="mt-4 text-2xl font-bold">{userName ? userName : currentUser.name}
+                <span onClick={() => {toggleRenameModal();}}><BiEdit className="mb-1 icon-xl icon-gray-700 hover:icon-green-400"/></span>
               </p>
             </div>
             <UserStatus user={currentUser} />

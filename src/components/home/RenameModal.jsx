@@ -53,7 +53,7 @@ export function RenameModal(props) {
     if (response.status === 200) {
       props.toggleRenameModal();
     } else {
-      console.error('リクエストエラー:', response);
+      alert('名前の変更に失敗しました');
     }
   };
 
@@ -66,7 +66,7 @@ export function RenameModal(props) {
         <h1 className="text-center mt-5 font-bold text-xl">名前の変更</h1>
         <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center h-full text-center">
           <input
-            className="border-2 w-11/12 lg:w-1/2 p-5 mb-20 text-center text-xl font-bold"
+            className="w-11/12 lg:w-1/2 p-5 mb-20 text-center text-xl font-bold border-2 border-gray-400 focus:outline-green-400"
             id={props.currentUser.id}
             name={props.currentUser.name}
             type="text"
