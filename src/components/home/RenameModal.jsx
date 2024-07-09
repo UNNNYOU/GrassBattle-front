@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { RxCross2 } from "rocketicons/rx";
 import { useRouter } from 'next/navigation';
 
@@ -18,7 +17,7 @@ export function RenameModal(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user: { name: props.userName } // パラメータの構造を変更
+        user: { name: props.currentUserName } // パラメータの構造を変更
       }),
     });
 
@@ -42,7 +41,7 @@ export function RenameModal(props) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            user: { name: props.userName } // パラメータの構造を変更
+            user: { name: props.currentUserName } // パラメータの構造を変更
           }),
         });
       } else {
@@ -61,7 +60,7 @@ export function RenameModal(props) {
     <div className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}>
       <div className="relative w-11/12 h-4/5 px-2 py-10 lg:p-20 bg-white">
         <div className="absolute top-2 right-2" onClick={props.toggleRenameModal}>
-          <RxCross2 className="icon-2xl icon-gray-700" />
+          <RxCross2 className="icon-2xl icon-gray-700 hover:icon-green-400 hover:cursor-pointer" />
         </div>
         <h1 className="text-center mt-5 font-bold text-xl">名前の変更</h1>
         <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center h-full text-center">
@@ -70,8 +69,8 @@ export function RenameModal(props) {
             id={props.currentUser.id}
             name={props.currentUser.name}
             type="text"
-            value={props.userName}
-            onChange={(e) => props.setUserName(e.target.value)}
+            value={props.currentUserName}
+            onChange={(e) => props.setCurrentUserName(e.target.value)}
           />
           <button
             type="submit"

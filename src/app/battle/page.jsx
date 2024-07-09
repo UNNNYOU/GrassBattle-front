@@ -91,54 +91,55 @@ export default function Home() {
     setIsModalOpen(!isModalOpen);
   };
 
-  if(loading) return <Loader />
+  if (loading) return <Loader />
+
 
   return (
-    <div className="bg-white">
-      <div className="container m-auto min-h-screen">
-        <div className="text-center text-4xl pt-10">
-          <p>GRASS BATTLE MEMBERS</p>
-        </div>
-        <div className="flex flex-wrap justify-center my-10 pb-10">
-          {users.map((user) => (
-            <div key={user.id} className="flex mx-4 mt-4 w-72 flex-col rounded-xl bg-white text-gray-700 shadow-2xl drop-shadow-xl">
-              <div className="mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-xl">
-                <Image
-                  src="/UserImage.png"
-                  alt="ユーザー画像"
-                  width="1920"
-                  height="1080"
-                  priority
-                  style={{ objectFit: 'contain' }}
-                />
-              </div>
-              <p className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                {user.name}
-              </p>
-              <button
-                onClick={() => {
-                  toggleModal();
-                  setBattleUser(user);
-                }}
-                className="w-full relative text-center px-5 py-3 overflow-hidden font-bold text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group"
-              >
-                <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
-                <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
-                <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
-                <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
-                <span className="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
-                <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">BATTLE START</span>
-              </button>
-            </div>
-          ))}
-        </div>
-        <div>
-          {isModalOpen && (
-            <BattleResult currentUser={currentUser} toggleModal={toggleModal} battleUser={battleUser} />
-          )}
-        </div>
-        <Pagination pagination={pagination} setPaged={setPaged} />
+  <div className="bg-white">
+    <div className="container m-auto min-h-screen">
+      <div className="text-center text-4xl pt-10">
+        <p>GRASS BATTLE MEMBERS</p>
       </div>
+      <div className="flex flex-wrap justify-center my-10 pb-10">
+        {users.map((user) => (
+          <div key={user.id} className="flex flex-col items-center mx-4 mt-4 w-72 rounded-xl bg-white text-gray-700 shadow-2xl drop-shadow-xl">
+            <div className="mx-4 mt-4 w-4/5 h-44 overflow-hidden rounded-xl bg-white text-gray-700 shadow-2xl flex items-center justify-center">
+              <Image
+                src={`/avatar${user.avatar_id}.png`}
+                alt="ユーザー画像"
+                width="150"
+                height="150"
+                priority
+                style={{ objectFit: 'contain' }} // 画像の背景の部分はそのまま
+              />
+            </div>
+            <p className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+              {user.name}
+            </p>
+            <button
+              onClick={() => {
+                toggleModal();
+                setBattleUser(user);
+              }}
+              className="w-full relative text-center px-5 py-3 overflow-hidden font-bold text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group"
+            >
+              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+              <span className="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">BATTLE START</span>
+            </button>
+          </div>
+        ))}
+      </div>
+      <div>
+        {isModalOpen && (
+          <BattleResult currentUser={currentUser} toggleModal={toggleModal} battleUser={battleUser} />
+        )}
+      </div>
+      <Pagination pagination={pagination} setPaged={setPaged} />
     </div>
-  )
+  </div>
+);
 }

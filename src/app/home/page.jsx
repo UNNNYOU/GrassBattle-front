@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
@@ -9,16 +10,20 @@ import { CombatPowerGraph } from '@/components/home/CombatPowerGraph';
 import { BiEdit } from "rocketicons/bi";
 import Image from 'next/image';
 import { RenameModal } from '@/components/home/RenameModal';
+import { AvatarModal } from '@/components/home/AvatarModal';
 
 export default function Home() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [userName, setUserName] = useState('');
-  const [experienceHistories, setExperienceHistories] = useState([]);
-  const [weekContributionHistories, setWeekContributionHistories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const isMounted = useRef(true);
+  const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUserAvatarId, setCurrentUserAvatarId] = useState('1');
+  const [currentUserName, setCurrentUserName] = useState('');
+  const [avatarCount, setAvatarCount] = useState(0);
+  const [experienceHistories, setExperienceHistories] = useState([]);
+  const [weekContributionHistories, setWeekContributionHistories] = useState([]);
   const [renameModalOpen, setRenameModalOpen] = useState(false);
+  const [avatarModalOpen, setAvatarModalOpen] = useState(false);
 
   const fetchCurrentUser = async () => {
     try {
@@ -57,11 +62,13 @@ export default function Home() {
       }
 
       if (isMounted.current) {
-        const userData = await response.json();
-        setCurrentUser(userData.current_user);
-        setExperienceHistories(userData.experience_histories);
-        setWeekContributionHistories(userData.week_contribution_histories);
-        setUserName(userData.current_user.name);
+        const data = await response.json();
+        setCurrentUser(data.current_user);
+        setCurrentUserAvatarId(data.current_user.avatar_id);
+        setExperienceHistories(data.experience_histories);
+        setWeekContributionHistories(data.week_contribution_histories);
+        setCurrentUserName(data.current_user.name);
+        setAvatarCount(data.avatar_count);
         setLoading(false);
       }
     } catch (error) {
@@ -84,7 +91,11 @@ export default function Home() {
   }, []);
 
   const toggleRenameModal = () => {
-    setRenameModalOpen(!renameModalOpen);
+    setRenameModalOpen(prev => !prev);
+  };
+
+  const toggleAvatarModal = () => {
+    setAvatarModalOpen(prev => !prev);
   };
 
   if (loading) return <Loader />;
@@ -96,15 +107,16 @@ export default function Home() {
           <div className="flex flex-wrap justify-center xl:ml-20 w-full">
             <div className="w-full lg:w-auto lg:mr-5 pb-2 flex flex-col items-center justify-center lg:flex-none border-b-4 lg:border-none border-green-500">
               <Image
-                src="/coming_soon.png"
+                src={`/avatar${currentUserAvatarId}.png`}
                 alt="アイコン"
-                width="200"
-                height="200"
+                width={200}
+                height={200}
                 priority
-                style={{ objectFit: 'contain' }} 
+                className="border-4 border-gray-700 hover:border-green-500 cursor-pointer "
+                onClick={toggleAvatarModal}
               />
-              <p className="mt-4 text-2xl font-bold">{userName ? userName : currentUser.name}
-                <span onClick={() => {toggleRenameModal();}}><BiEdit className="mb-1 icon-xl icon-gray-700 hover:icon-green-400"/></span>
+              <p className="mt-4 text-2xl font-bold">{currentUserName || currentUser.name}
+                <span onClick={toggleRenameModal}><BiEdit className="mb-1 icon-xl icon-gray-700 hover:icon-green-400 hover:cursor-pointer"/></span>
               </p>
             </div>
             <UserStatus user={currentUser} />
@@ -115,11 +127,22 @@ export default function Home() {
           <UserExperience experienceHistories={experienceHistories}/>
         </div>
       </div>
-      <div>
-        {renameModalOpen && (
-          <RenameModal toggleRenameModal={toggleRenameModal} currentUser={currentUser} userName={userName} setUserName={setUserName}/>
-        )}
-      </div>
+      {renameModalOpen && (
+        <RenameModal
+          toggleRenameModal={toggleRenameModal}
+          currentUser={currentUser}
+          currentUserName={currentUserName}
+          setCurrentUserName={setCurrentUserName}/>
+      )}
+      {avatarModalOpen && (
+        <AvatarModal
+          toggleAvatarModal={toggleAvatarModal}
+          currentUser={currentUser}
+          avatarCount={avatarCount}
+          currentUserAvatarId={currentUserAvatarId}
+          setCurrentUserAvatarId={setCurrentUserAvatarId}/>
+      )}
     </div>
-  )
+  );
 }
+
