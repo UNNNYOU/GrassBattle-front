@@ -40,6 +40,8 @@ export default function Top() {
             alt="トップページのロゴ"
             width="1920"
             height="1080"
+            priority
+            style={{ objectFit: 'contain' }}
           />
         </div>
         <div className="mt-16 text-center">
