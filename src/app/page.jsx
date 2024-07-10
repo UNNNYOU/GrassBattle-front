@@ -3,12 +3,10 @@ import Image from "next/image";
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-
 export default function Top() {
   const router = useRouter();
 
   useEffect(() => {
-    // ログイン済みであれば、ホームにリダイレクト
     const token = localStorage.getItem('refresh_token');
     if (token) {
       router.push('/home');
@@ -17,7 +15,6 @@ export default function Top() {
 
   const handleAuth = () => {
     try {
-      // GitHub認証のためのリクエストを送信
       window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/github`;
     } catch (error) {
       console.error('リクエストエラー:', error);
@@ -44,7 +41,7 @@ export default function Top() {
             style={{ objectFit: 'contain' }}
           />
         </div>
-        <div className="mt-16 text-center">
+        <div className="mt-12 text-center">
           <button
             onClick={handleAuth}
             className="relative text-center px-16 py-4 overflow-hidden font-bold bg-green-300 border border-gray-100 rounded-sm shadow-inner group"
