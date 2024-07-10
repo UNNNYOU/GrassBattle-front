@@ -27,6 +27,9 @@ export function Header() {
             </Link>
             <ul>
               <li>
+                <Link href="/home" className="mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400">
+                  Home
+                </Link>
                 <Link href="/battle" className="mr-6 text-white text-xl xl:text-2xl font-bold hover:underline hover:text-green-400">
                   Battle
                 </Link>
