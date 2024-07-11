@@ -14,6 +14,12 @@ export const metadata = {
     images: "https://www.grassbattle.com/OGP.webp",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "GRASS BATTLE",
+    description: "GitHubのコントリビューションで対戦するゲーム",
+    images: "https://www.grassbattle.com/OGP.webp",
+  },
 };
 
 export default function RootLayout({ children }) {
