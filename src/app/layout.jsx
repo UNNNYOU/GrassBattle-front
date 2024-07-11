@@ -9,7 +9,7 @@ export const metadata = {
   openGraph: {
     title: "GRASS BATTLE",
     description: "GitHubのコントリビューションで対戦するゲーム",
-    url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+    url: "https://www.grassbattle.com",
     siteName: "GRASS BATTLE",
     images: "https://www.grassbattle.com/OGP.webp",
     type: "website",
