@@ -56,6 +56,13 @@ export function RenameModal(props) {
     }
   };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    if (value.length <= 10) {
+      props.setCurrentUserName(value);
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}>
       <div className="relative w-11/12 h-4/5 px-2 py-10 lg:p-20 bg-white">
@@ -63,6 +70,8 @@ export function RenameModal(props) {
           <RxCross2 className="icon-2xl icon-gray-700 hover:icon-green-400 hover:cursor-pointer" />
         </div>
         <h1 className="text-center mt-5 font-bold text-xl">名前の変更</h1>
+
+        <p className="text-center mt-5">※ユーザー名は10文字以内にしてください</p>
         <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center h-full text-center">
           <input
             className="w-11/12 lg:w-1/2 p-5 mb-20 text-center text-xl font-bold border-2 border-gray-400 focus:outline-green-400"
@@ -70,7 +79,7 @@ export function RenameModal(props) {
             name={props.currentUser.name}
             type="text"
             value={props.currentUserName}
-            onChange={(e) => props.setCurrentUserName(e.target.value)}
+            onChange={handleInputChange} // 修正されたイベントハンドラー
           />
           <button
             type="submit"
