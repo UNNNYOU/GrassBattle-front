@@ -26,7 +26,7 @@ export default function TokenPage() {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, [searchParams, router]); // searchParams と router を依存配列に追加
+  }, [searchParams, router]);
 
   return <Loader />
 }

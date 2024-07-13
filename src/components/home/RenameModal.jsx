@@ -17,7 +17,7 @@ export function RenameModal(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user: { name: props.currentUserName } // パラメータの構造を変更
+        user: { name: props.currentUserName }
       }),
     });
 
@@ -35,13 +35,13 @@ export function RenameModal(props) {
         localStorage.setItem('refresh_token', data.refresh_token);
 
         response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/${props.currentUser.id}`, {
-          method: 'PATCH', // PATCHに変更
+          method: 'PATCH',
           headers: {
             'Authorization': `Bearer ${data.access_token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            user: { name: props.currentUserName } // パラメータの構造を変更
+            user: { name: props.currentUserName }
           }),
         });
       } else {
@@ -79,7 +79,7 @@ export function RenameModal(props) {
             name={props.currentUser.name}
             type="text"
             value={props.currentUserName}
-            onChange={handleInputChange} // 修正されたイベントハンドラー
+            onChange={handleInputChange} 
           />
           <button
             type="submit"

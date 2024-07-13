@@ -82,7 +82,6 @@ export default function Home() {
   }, [paged]);
 
   useEffect(() => {
-    // URLのqueryパラメータからpagedの値を取得してセットする
     const page = parseInt(searchParams.get('page'), 10) || 1;
     setPaged(page);
   }, [searchParams.get('page')]);
@@ -110,7 +109,7 @@ export default function Home() {
                 width="150"
                 height="150"
                 priority
-                style={{ objectFit: 'contain' }} // 画像の背景の部分はそのまま
+                style={{ objectFit: 'contain' }}
               />
             </div>
             <p className="text-center mt-2 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
