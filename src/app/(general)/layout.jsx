@@ -1,9 +1,9 @@
-import { AuthHeader } from "@/components/shared/AuthHeader";
+import { Header } from "@/components/shared/Header";
 
 export default function AuthLayout({ children }) {
   return (
     <>
-      <AuthHeader/>
+      <Header/>
       {children}
     </>
   );

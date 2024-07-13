@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { Suspense } from "react";
 import { Loader } from "@/components/shared/Loader";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Footer } from "@/components/shared/Footer";
 
 export const metadata = {
   title: "GRASS BATTLE",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
         <Suspense fallback={<Loader/>}>
           {children}
         </Suspense>
+        <Footer/>
       </body>
     </html>
   );
